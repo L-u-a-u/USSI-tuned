@@ -3111,7 +3111,7 @@ local function synsaveinstance(CustomOptions, CustomOptions2)
 			else
 				local totalstr = header
 				local c1 = table.move(chunks, 1, #chunks/2, 1, {})
-				local c2 = table.move(chunks, 1, #chunks/2, 1, {})
+				local c2 = table.move(chunks, #chunks/2, #chunks, 1, {})
 				local yield = true
 				local yield2 = true
 				task.spawn(function()
@@ -3125,7 +3125,7 @@ local function synsaveinstance(CustomOptions, CustomOptions2)
 						totalstr ..= chunk.str
 					end
 					yield2 = false
-				end)
+				end) 
 				repeat task.wait() until yield == false and yield2 == false
 				run_with_loading(
 					"Writing " .. get_size_format() .. " to File (Depends on Exec)",
