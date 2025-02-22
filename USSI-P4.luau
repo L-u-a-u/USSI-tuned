@@ -3,6 +3,18 @@
 --!divine-intellect
 -- https://discord.gg/wx4ThpAsmw
 
+-- optimize adapt overcome
+local game = game
+local pcall = pcall
+local workspace = workspace
+local setmetatable = setmetatable
+local bit32 = bit32
+local buffer = buffer
+local Instance = Instance
+local assert = assert
+local table = table
+local string = string
+
 local function string_find(s, pattern)
 	return string.find(s, pattern, nil, true)
 end
@@ -72,6 +84,7 @@ local writefile = writefile
 local getscriptbytecode = global_container.getscriptbytecode -- * A lot of assumptions are made based on whether this function is defined or not. So in certain edge cases, like if the executor defines "decompile" or "getscripthash" function yet doesn't define this function there might be loss of functionality of the saveinstance. Although that would be very rare and weird
 local base64encode = global_container.base64encode
 local sha384
+
 
 local service = setmetatable({}, {
 	__index = function(self, serviceName)
