@@ -3118,11 +3118,13 @@ local function synsaveinstance(CustomOptions, CustomOptions2)
 					for _, chunk in c1 do
 						totalstr ..= chunk.str
 					end
+					yield = false
 				end)
 				task.spawn(function()
 					for _, chunk in c2 do
 						totalstr ..= chunk.str
 					end
+					yield2 = false
 				end)
 				repeat task.wait() until yield == false and yield2 == false
 				run_with_loading(
