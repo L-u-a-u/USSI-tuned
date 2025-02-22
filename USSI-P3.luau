@@ -3110,23 +3110,44 @@ local function synsaveinstance(CustomOptions, CustomOptions2)
 				end
 			else
 				local totalstr = header
-				local c1 = table.move(chunks, 1, #chunks/2, 1, {})
-				local c2 = table.move(chunks, #chunks/2, #chunks, 1, {})
+				local s1 = ""
+				local s2 = ""
+				local s3 = ""
+				local s4 = ""
+				local c1 = table.move(chunks, 1, #chunks/4, 1, {})
+				local c2 = table.move(chunks, #chunks/4, #chunks/2, 1, {})
+				local c3 = table.move(chunks, #chunks/2, (#chunks/2) + #chunks/4, 1, {})
+				local c4 = table.move(chunks, (#chunks/2) + #chunks/4, #chunks, 1, {})
 				local yield = true
 				local yield2 = true
+				local yield3 = true
+				local yield4 = true
 				task.spawn(function()
 					for _, chunk in c1 do
-						totalstr ..= chunk.str
+						s1 ..= chunk.str
 					end
 					yield = false
 				end)
 				task.spawn(function()
 					for _, chunk in c2 do
-						totalstr ..= chunk.str
+						s2 ..= chunk.str
 					end
 					yield2 = false
 				end) 
-				repeat task.wait() until yield == false and yield2 == false
+				task.spawn(function()
+					for _, chunk in c3 do
+						s3 ..= chunk.str
+					end
+					yield3 = false
+				end)
+				task.spawn(function()
+					for _, chunk in c4 do
+						s4 ..= chunk.str
+					end
+					yield4 = false
+				end) 
+				repeat task.wait() until yield == false and yield2 == false and yield3 == false and yield4 == false
+				totalstr ..= s1 .. s2 .. s3 .. s4
 				run_with_loading(
 					"Writing " .. get_size_format() .. " to File (Depends on Exec)",
 					nil,
